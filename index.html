@@ -37,17 +37,6 @@
     <script type="module" src="/src/main.tsx">
 
        const audio = document.getElementById("bg-music");
-    const delay = 10000; // tempo de espera em ms (ex: 5000 = 5s)
-
-    // tenta tocar automaticamente depois do delay
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        audio.play().catch(() => {
-          console.log("Autoplay bloqueado. Aguardando interação do usuário.");
-        });
-      }, delay);
-    });
-
     // fallback: caso o navegador bloqueie, toca no primeiro clique/toque
     document.body.addEventListener("click", () => {
       if (audio.paused) {
@@ -55,5 +44,18 @@
       }
     }, { once: true });
     </script>
+
+    <style>
+      ::-moz-selection { /* Code for Firefox */
+    color: rgb(255, 255, 255);
+    background: rgb(255, 255, 255);
+
+  }
+
+  ::selection {
+    color: rgb(255, 255, 255);
+    background: rgb(255, 255, 255);
+  }
+    </style>
   </body>
 </html>
