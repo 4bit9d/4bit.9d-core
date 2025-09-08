@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4bit xd </title>
+    <title>@4bit.9d</title>
     <meta name="description" content="4bit core" />
     <meta name="author" content="4bit" />
     <meta name="keywords" content="ASCII" />
@@ -12,14 +12,13 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="4bit core" />
     <meta property="og:description" content="4bit " />
-    <meta property="og:url" content="https://lovable.dev/projects/995f0ede-ccae-4e06-ba9c-7d3002b09cab" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+   
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="VODKA - Retro 8-Bit Zone" />
     <meta name="twitter:description" content="" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
 
     <!-- Theme -->
     <meta name="theme-color" content="#000000" />
@@ -32,17 +31,88 @@
   <body>
 
     <div id="root"></div>
-    <audio id="bg-music" src="/src/hooks/musica.mp3" autoplay></audio>
+    <audio id="rainBackground" src="/src/hooks/musica.mp3" preload="auto"></audio>
+<audio class="audioPlayer" src="/src/hooks/musica.mp3"></audio>
 
     <script type="module" src="/src/main.tsx">
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona especificamente o áudio de chuva, não o player de música
+    const rainAudio = document.querySelector('audio[src="/src/hooks/musica.mp3"]');
+    
+    if (!rainAudio) {
+        console.error('Elemento de áudio da chuva não encontrado');
+        return;
+    }
+    
+    // Configurar o áudio de chuva
+    rainAudio.loop = true;
+    rainAudio.volume = 0.05; // Volume baixo para som ambiente
+    
+    // Variável para controlar se já tentamos iniciar o áudio
+    let audioStartAttempted = false;
+    
+    // Função para tentar iniciar o áudio da chuva
+    function tryPlayRainAudio() {
+        if (audioStartAttempted) return;
+        audioStartAttempted = true;
+        
+        const playPromise = rainAudio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log('Autoplay do áudio de chuva bloqueado. Aguardando interação:', error);
+                
+                // Criar uma função de evento única para iniciar o áudio
+                const startRainAudio = function() {
+                    rainAudio.play().catch(err => {
+                        console.log('Ainda não foi possível iniciar o áudio de chuva:', err);
+                    });
+                    
+                    // Remover os listeners após a primeira tentativa
+                    document.removeEventListener('click', startRainAudio);
+                    document.removeEventListener('touchstart', startRainAudio);
+                    document.removeEventListener('keydown', startRainAudio);
+                };
+                
+                // Adicionar eventos para diferentes tipos de interação
+                document.addEventListener('click', startRainAudio, { once: true });
+                document.addEventListener('touchstart', startRainAudio, { once: true });
+                document.addEventListener('keydown', startRainAudio, { once: true });
+            });
+        }
+    }
+    
+    // Tentar iniciar o áudio imediatamente
+    tryPlayRainAudio();
+    
+    // Backup: tentar novamente após 1 segundo
+    setTimeout(tryPlayRainAudio, 1000);
+});
 
-       const audio = document.getElementById("bg-music");
-    // fallback: caso o navegador bloqueie, toca no primeiro clique/toque
-    document.body.addEventListener("click", () => {
-      if (audio.paused) {
-        audio.play();
-      }
-    }, { once: true });
+ const titleText = "@4bit.9d";
+        let index = 0;
+
+        // Função para animar o título
+        function typeTitle() {
+            if (index < titleText.length) {
+                // Atualiza o <title> com uma letra adicional
+                document.title += titleText[index];
+                index++;
+                // Define um intervalo para a próxima letra
+                setTimeout(typeTitle, 300); // Ajuste o tempo (em milissegundos) para controlar a velocidade
+            } else {
+                // Reinicia a animação após um pequeno delay
+                setTimeout(() => {
+                    document.title = ""; // Limpa o título
+                    index = 0; // Reinicia o índice
+                    typeTitle(); // Começa novamente
+                }, 2000); // Espera 2 segundos antes de reiniciar
+            }
+        }
+
+        // Inicia a animação quando a página carrega
+        typeTitle();
+
     </script>
 
     <style>
