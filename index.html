@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4bit xd </title>
+    <meta name="description" content="4bit core" />
+    <meta name="author" content="4bit" />
+    <meta name="keywords" content="ASCII" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="4bit core" />
+    <meta property="og:description" content="4bit " />
+    <meta property="og:url" content="https://lovable.dev/projects/995f0ede-ccae-4e06-ba9c-7d3002b09cab" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VODKA - Retro 8-Bit Zone" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark" />
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://lovable.dev/projects/995f0ede-ccae-4e06-ba9c-7d3002b09cab" />
+  </head>
+
+  <body>
+
+    <div id="root"></div>
+    <audio id="bg-music" src="/src/hooks/musica.mp3" autoplay loop></audio>
+
+    <script type="module" src="/src/main.tsx">
+
+       const audio = document.getElementById("bg-music");
+    const delay = 10000; // tempo de espera em ms (ex: 5000 = 5s)
+
+    // tenta tocar automaticamente depois do delay
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        audio.play().catch(() => {
+          console.log("Autoplay bloqueado. Aguardando interação do usuário.");
+        });
+      }, delay);
+    });
+
+    // fallback: caso o navegador bloqueie, toca no primeiro clique/toque
+    document.body.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+      }
+    }, { once: true });
+    </script>
+  </body>
+</html>
