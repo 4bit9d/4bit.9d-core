@@ -7,7 +7,8 @@
     <meta name="description" content="4bit core" />
     <meta name="author" content="4bit" />
     <meta name="keywords" content="ASCII" />
-   
+   <link rel="icon" type="image/gif" href="/favicon.gif" />
+
     <!-- Theme -->
     <meta name="theme-color" content="#000000" />
     <meta name="color-scheme" content="dark" />
@@ -17,65 +18,34 @@
   </head>
 
   <body>
-
+<audio id="bg-music" autoplay loop>
+  <source src="/src/sla.mp3" type="audio/mpeg">
+  Seu navegador não suporta áudio.
+</audio>
     <div id="root"></div>
-    <audio id="rainBackground" src="/src/sla.mp3" preload="auto" autoplay></audio>
-<audio class="audioPlayer" src="/src/sla.mp3" autoplay></audio>
+    
 
     <script type="module" src="/src/main.tsx">
-document.addEventListener('DOMContentLoaded', function() {
-    // Seleciona especificamente o áudio de chuva, não o player de música
-    const rainAudio = document.querySelector('audio[src="/src/hooks/musica.mp3"]');
+
+ 
+    </script>
+<script>
+   const audio = document.getElementById("bg-music");
+
+  // Tenta tocar automaticamente
+  audio.play().catch(() => {
+    console.log("Autoplay bloqueado, aguardando interação do usuário...");
     
-    if (!rainAudio) {
-        console.error('Elemento de áudio da chuva não encontrado');
-        return;
-    }
-    
-    // Configurar o áudio de chuva
-    rainAudio.loop = true;
-    rainAudio.volume = 0.05; // Volume baixo para som ambiente
-    
-    // Variável para controlar se já tentamos iniciar o áudio
-    let audioStartAttempted = false;
-    
-    // Função para tentar iniciar o áudio da chuva
-    function tryPlayRainAudio() {
-        if (audioStartAttempted) return;
-        audioStartAttempted = true;
-        
-        const playPromise = rainAudio.play();
-        
-        if (playPromise !== undefined) {
-            playPromise.catch(error => {
-                console.log('Autoplay do áudio de chuva bloqueado. Aguardando interação:', error);
-                
-                // Criar uma função de evento única para iniciar o áudio
-                const startRainAudio = function() {
-                    rainAudio.play().catch(err => {
-                        console.log('Ainda não foi possível iniciar o áudio de chuva:', err);
-                    });
-                    
-                    // Remover os listeners após a primeira tentativa
-                    document.removeEventListener('click', startRainAudio);
-                    document.removeEventListener('touchstart', startRainAudio);
-                    document.removeEventListener('keydown', startRainAudio);
-                };
-                
-                // Adicionar eventos para diferentes tipos de interação
-                document.addEventListener('click', startRainAudio, { once: true });
-                document.addEventListener('touchstart', startRainAudio, { once: true });
-                document.addEventListener('keydown', startRainAudio, { once: true });
-            });
-        }
-    }
-    
-    // Tentar iniciar o áudio imediatamente
-    tryPlayRainAudio();
-    
-    // Backup: tentar novamente após 1 segundo
-    setTimeout(tryPlayRainAudio, 1000);
-});
+    // Se bloquear, espera a primeira interação do usuário
+    const startMusic = () => {
+      audio.play();
+      document.removeEventListener("click", startMusic);
+      document.removeEventListener("keydown", startMusic);
+    };
+
+    document.addEventListener("click", startMusic);
+    document.addEventListener("keydown", startMusic);
+  });
 
  const titleText = "@4bit.9d";
         let index = 0;
@@ -101,8 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Inicia a animação quando a página carrega
         typeTitle();
 
-    </script>
-
+</script>
     <style>
       ::-moz-selection { /* Code for Firefox */
     color: rgb(255, 255, 255);
