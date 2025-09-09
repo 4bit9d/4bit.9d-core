@@ -239,6 +239,55 @@ const SocialLinks = () => {
             font-size: 12px;
           }
         }
+
+        @media (max-width: 770px) {
+          .popup {
+            width: 95%;
+            max-width: 450px;
+          }
+          
+          .popup-header {
+            font-size: 1.8em;
+            padding: 20px;
+          }
+          
+          .popup-content {
+            padding: 30px;
+            font-size: 1.4em;
+          }
+          
+          .btn {
+            padding: 15px 25px;
+            font-size: 16px;
+            margin-left: 10px;
+          }
+          
+          .popup-actions {
+            padding: 25px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .popup {
+            width: 90%;
+            max-width: 380px;
+          }
+          
+          .popup-header {
+            font-size: 1.6em;
+            padding: 18px;
+          }
+          
+          .popup-content {
+            padding: 25px;
+            font-size: 1.2em;
+          }
+          
+          .btn {
+            padding: 12px 20px;
+            font-size: 14px;
+          }
+        }
       `}</style>
 
       <div className="space-y-4">
